@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET_KEY } from '../../config'
 
-
 export class auth {
   static async register(req: any, res: any) {
     const { username, email, password } = req.body
@@ -53,8 +52,10 @@ export class auth {
 
         if (matchPassword) {
           res.cookie('access_token', token, {
-            secure: process.env.NODE_ENV === 'production'
-          }).send('cooclie is set correctly')
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60  // 1 hour
+          }).send('cookie is set correctly')
         } else {
           res.json({ alert: "incorrect password" })
         }
@@ -78,16 +79,19 @@ export class auth {
   static async protected(req: any, res: any) {
     try {
 
-      const token = req.cookies.access_token
+      const token = await req.cookies.access_token
+
+      console.log(req.cookies)
 
       if (!token) {
-        res.status(403).send('unauthorized')
+        res.json({ data: false })
       } else {
         const data = jwt.verify(token, JWT_SECRET_KEY)
         res.json(data)
       }
     } catch (error) {
-      res.json({ error })
+      console.error(error);
+      res.status(500).json({ error: 'Error interno del servidor' });
     }
   }
 
