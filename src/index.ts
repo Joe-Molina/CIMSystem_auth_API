@@ -9,11 +9,11 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({ credentials: true, origin: ['http://10.10.1.4:3005', 'http://localhost:3001'] }))
 
-const PORT = process.env.PORT ?? 3002
+const PORT = 3002
 
 app.use('/', AuthRouter)
 app.use('/interactions', interactions);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
+  console.log(`Server is running on port 3002`)
 })
