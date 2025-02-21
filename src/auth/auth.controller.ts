@@ -1,7 +1,7 @@
 import { authModel } from './auth.models'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { JWT_SECRET_KEY } from '../../config'
+import { JWT_SECRET_KEY } from '../config'
 
 export class auth {
   static async register(req: any, res: any) {
