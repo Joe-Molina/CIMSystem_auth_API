@@ -1,4 +1,4 @@
-import { authModel } from '../models/auth.models'
+import { authModel } from './auth.models'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET_KEY } from '../../config'

@@ -13,3 +13,26 @@ model Users {
   email    String @unique
   password String
 }
+
+model interaction_Type {
+  id           Int            @id @default(autoincrement())
+  type         String
+  interactions interactions[]
+}
+
+model payment {
+  id          Int            @id @default(autoincrement())
+  factura     Int
+  createdAt   DateTime       @default(now())
+  interaction interactions[]
+}
+
+model interactions {
+  id                 Int               @id @default(autoincrement())
+  accion             String
+  paymentId          Int?
+  payment            payment?          @relation(fields: [paymentId], references: [id])
+  interaction_TypeId Int
+  createdAt          DateTime          @default(now())
+  interaction_Type   interaction_Type? @relation(fields: [interaction_TypeId], references: [id])
+}
