@@ -46,15 +46,15 @@ export class InteractionController {
 
   static async getAllInteraction(req: Request, res: Response) {
     try {
-      const { month } = req.params;
+      const { month, year } = req.params;
 
       const interactions = await InteractionModel.getAllInteractions();
 
       const interactionsNew = interactions ? interactions.filter(int => int.interaction_TypeId == 1) : []
 
-      const filterByTime = interactionsNew.filter(interaction => (interaction.createdAt.getMonth() + 1) == Number(month))
+      const filterByTime = interactionsNew.filter(interaction => ((interaction.createdAt.getMonth() + 1) == Number(month)) && (interaction.createdAt.getFullYear() == Number(year)))
 
-      res.json({ filterByTime, total: filterByTime.length })
+      res.json(filterByTime)
 
 
     } catch (error) {
