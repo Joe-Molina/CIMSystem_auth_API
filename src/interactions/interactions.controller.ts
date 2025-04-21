@@ -43,4 +43,22 @@ export class InteractionController {
       res.status(500).json({ error: error });
     }
   }
+
+  static async getAllInteraction(req: Request, res: Response) {
+    try {
+      const { month } = req.params;
+
+      const interactions = await InteractionModel.getAllInteractions();
+
+      const interactionsNew = interactions ? interactions.filter(int => int.interaction_TypeId == 1) : []
+
+      const filterByTime = interactionsNew.filter(interaction => (interaction.createdAt.getMonth() + 1) == Number(month))
+
+      res.json({ filterByTime, total: filterByTime.length })
+
+
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  }
 }

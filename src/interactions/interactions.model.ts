@@ -65,4 +65,18 @@ export class InteractionModel {
 
   }
 
+  static async getAllInteractions() {
+
+    try {
+
+      const response = await prisma.interactions.findMany()
+
+      return response
+
+    } catch (error) {
+      return console.log(error)
+    }
+
+  }
+
 }
