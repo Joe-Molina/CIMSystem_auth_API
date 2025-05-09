@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "mails" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "accion" TEXT NOT NULL,
+    "nombre" TEXT NOT NULL,
+    "cedula" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "msj" TEXT NOT NULL
+);

@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+   enableTracing = true 
 }
 
 datasource db {
@@ -36,3 +37,13 @@ model interactions {
   createdAt          DateTime          @default(now())
   interaction_Type   interaction_Type? @relation(fields: [interaction_TypeId], references: [id])
 }
+
+model mails {
+  id        Int      @id @default(autoincrement())
+  accion    String
+  nombre    String
+  cedula    String
+  createdAt DateTime @default(now())
+  msj       String
+}
+
