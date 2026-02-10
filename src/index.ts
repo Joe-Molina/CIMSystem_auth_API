@@ -8,7 +8,7 @@ import mails from './mails/mails.route'
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({ credentials: true, origin: ['http://10.10.1.4:3005', 'http://localhost:3001'] }))
+app.use(cors({ credentials: true, origin: ['http://10.10.1.4:3005', 'http://localhost:3001', 'http://localhost:3005', "http://10.10.4.159:3005"] }))
 
 const PORT = 3002
 

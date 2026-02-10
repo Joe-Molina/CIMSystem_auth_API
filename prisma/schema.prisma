@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-   enableTracing = true 
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -13,6 +13,31 @@ model Users {
   username String
   email    String @unique
   password String
+  first_contact_lote first_contact_lote[]
+}
+
+model first_contact_lote {
+    id           Int            @id @default(autoincrement())
+    createdAt   DateTime       @default(now())
+    userId       Int
+    user Users @relation(fields: [userId], references: [id])
+    accion String
+    contactAvailable Boolean @default(false)
+    contact Boolean @default(false)
+    contact_createdAt   DateTime?       
+    response Boolean @default(false)
+    response_createdAt   DateTime?     
+    contactCall Boolean @default(false)
+    contactCall_createdAt   DateTime?       
+    responseCall Boolean @default(false)
+    responseCall_createdAt   DateTime?   
+    PromisePayment Boolean @default(false)
+    Payment Boolean @default(false)
+    PaymentId Int?
+    PromiseNonPayment Boolean @default(false)
+    note String?
+    caseStatus Boolean @default(false)
+    cuotasIniciales Int @default(100)
 }
 
 model interaction_Type {
@@ -46,4 +71,27 @@ model mails {
   createdAt DateTime @default(now())
   msj       String
 }
+
+model datos_actualizados {
+    id        Int      @id @default(autoincrement())
+    accion    Int 
+    tipo_socio Int 
+    nombres String
+    apellidos String
+    cedula    Int
+    parentesco String
+    rif Int 
+    sexo String
+    profesion String
+    nacionalidad String
+    edo_civil String
+    fecha_nacimiento String
+    lugar_nacimiento String
+    residencia String
+    telefono_celular String
+    telofono_hogar String
+    telefono_trabajo String
+}
+
+
 
