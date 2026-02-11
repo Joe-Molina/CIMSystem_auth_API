@@ -5,7 +5,6 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model Users {
@@ -20,7 +19,6 @@ model first_contact_lote {
   id                     Int       @id @default(autoincrement())
   createdAt              DateTime  @default(now())
   userId                 Int
-  user                   Users     @relation(fields: [userId], references: [id])
   accion                 String
   contactAvailable       Boolean   @default(false)
   contact                Boolean   @default(false)
@@ -38,6 +36,7 @@ model first_contact_lote {
   note                   String?
   caseStatus             Boolean   @default(false)
   cuotasIniciales        Int       @default(100)
+  user                   Users     @relation(fields: [userId], references: [id])
 }
 
 model interaction_Type {
@@ -54,13 +53,13 @@ model payment {
 }
 
 model interactions {
-  id                 Int               @id @default(autoincrement())
+  id                 Int              @id @default(autoincrement())
   accion             String
   paymentId          Int?
-  payment            payment?          @relation(fields: [paymentId], references: [id])
   interaction_TypeId Int
-  createdAt          DateTime          @default(now())
-  interaction_Type   interaction_Type? @relation(fields: [interaction_TypeId], references: [id])
+  createdAt          DateTime         @default(now())
+  interaction_Type   interaction_Type @relation(fields: [interaction_TypeId], references: [id])
+  payment            payment?         @relation(fields: [paymentId], references: [id])
 }
 
 model mails {
@@ -91,4 +90,20 @@ model datos_actualizados {
   telefono_celular String
   telofono_hogar   String
   telefono_trabajo String
+}
+
+model comprobantes_de_pago {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  pay_date      String
+  destiny_banck String
+  origin_banck  String
+  accion        String
+  tipo_pago     String
+  referencia    String
+  monto         Float
+  verificacion  Boolean  @default(false)
+  status        String   @default("PENDIENTE")
+  msj           String   @default("")
+  image         String
 }

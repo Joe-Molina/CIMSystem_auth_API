@@ -5,39 +5,38 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model Users {
-  id       Int    @id @default(autoincrement())
-  username String
-  email    String @unique
-  password String
+  id                 Int                  @id @default(autoincrement())
+  username           String
+  email              String               @unique
+  password           String
   first_contact_lote first_contact_lote[]
 }
 
 model first_contact_lote {
-    id           Int            @id @default(autoincrement())
-    createdAt   DateTime       @default(now())
-    userId       Int
-    user Users @relation(fields: [userId], references: [id])
-    accion String
-    contactAvailable Boolean @default(false)
-    contact Boolean @default(false)
-    contact_createdAt   DateTime?       
-    response Boolean @default(false)
-    response_createdAt   DateTime?     
-    contactCall Boolean @default(false)
-    contactCall_createdAt   DateTime?       
-    responseCall Boolean @default(false)
-    responseCall_createdAt   DateTime?   
-    PromisePayment Boolean @default(false)
-    Payment Boolean @default(false)
-    PaymentId Int?
-    PromiseNonPayment Boolean @default(false)
-    note String?
-    caseStatus Boolean @default(false)
-    cuotasIniciales Int @default(100)
+  id                     Int       @id @default(autoincrement())
+  createdAt              DateTime  @default(now())
+  userId                 Int
+  accion                 String
+  contactAvailable       Boolean   @default(false)
+  contact                Boolean   @default(false)
+  contact_createdAt      DateTime?
+  response               Boolean   @default(false)
+  response_createdAt     DateTime?
+  contactCall            Boolean   @default(false)
+  contactCall_createdAt  DateTime?
+  responseCall           Boolean   @default(false)
+  responseCall_createdAt DateTime?
+  PromisePayment         Boolean   @default(false)
+  Payment                Boolean   @default(false)
+  PaymentId              Int?
+  PromiseNonPayment      Boolean   @default(false)
+  note                   String?
+  caseStatus             Boolean   @default(false)
+  cuotasIniciales        Int       @default(100)
+  user                   Users     @relation(fields: [userId], references: [id])
 }
 
 model interaction_Type {
@@ -54,13 +53,13 @@ model payment {
 }
 
 model interactions {
-  id                 Int               @id @default(autoincrement())
+  id                 Int              @id @default(autoincrement())
   accion             String
   paymentId          Int?
-  payment            payment?          @relation(fields: [paymentId], references: [id])
   interaction_TypeId Int
-  createdAt          DateTime          @default(now())
-  interaction_Type   interaction_Type? @relation(fields: [interaction_TypeId], references: [id])
+  createdAt          DateTime         @default(now())
+  interaction_Type   interaction_Type @relation(fields: [interaction_TypeId], references: [id])
+  payment            payment?         @relation(fields: [paymentId], references: [id])
 }
 
 model mails {
@@ -73,25 +72,38 @@ model mails {
 }
 
 model datos_actualizados {
-    id        Int      @id @default(autoincrement())
-    accion    Int 
-    tipo_socio Int 
-    nombres String
-    apellidos String
-    cedula    Int
-    parentesco String
-    rif Int 
-    sexo String
-    profesion String
-    nacionalidad String
-    edo_civil String
-    fecha_nacimiento String
-    lugar_nacimiento String
-    residencia String
-    telefono_celular String
-    telofono_hogar String
-    telefono_trabajo String
+  id               Int    @id @default(autoincrement())
+  accion           Int
+  tipo_socio       Int
+  nombres          String
+  apellidos        String
+  cedula           Int
+  parentesco       String
+  rif              Int
+  sexo             String
+  profesion        String
+  nacionalidad     String
+  edo_civil        String
+  fecha_nacimiento String
+  lugar_nacimiento String
+  residencia       String
+  telefono_celular String
+  telofono_hogar   String
+  telefono_trabajo String
 }
 
-
-
+model comprobantes_de_pago {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  pay_date     String
+  destiny_banck String
+  origin_banck String
+  accion       String
+  tipo_pago    String
+  referencia   String
+  monto        Float
+  verificacion Boolean  @default(false)
+  status       String   @default("PENDIENTE")
+  msj          String   @default("")
+  image        String
+}

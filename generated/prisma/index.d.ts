@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library.js';
+import * as runtime from './runtime/client.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -48,6 +48,11 @@ export type mails = $Result.DefaultSelection<Prisma.$mailsPayload>
  * 
  */
 export type datos_actualizados = $Result.DefaultSelection<Prisma.$datos_actualizadosPayload>
+/**
+ * Model comprobantes_de_pago
+ * 
+ */
+export type comprobantes_de_pago = $Result.DefaultSelection<Prisma.$comprobantes_de_pagoPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -61,7 +66,7 @@ export type datos_actualizados = $Result.DefaultSelection<Prisma.$datos_actualiz
  * ```
  *
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
@@ -82,7 +87,7 @@ export class PrismaClient<
    * ```
    *
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
 
   constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
@@ -105,7 +110,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -117,7 +122,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -128,7 +133,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -140,7 +145,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -161,7 +166,6 @@ export class PrismaClient<
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
-
 
   $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
     extArgs: ExtArgs
@@ -236,6 +240,16 @@ export class PrismaClient<
     * ```
     */
   get datos_actualizados(): Prisma.datos_actualizadosDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.comprobantes_de_pago`: Exposes CRUD operations for the **comprobantes_de_pago** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Comprobantes_de_pagos
+    * const comprobantes_de_pagos = await prisma.comprobantes_de_pago.findMany()
+    * ```
+    */
+  get comprobantes_de_pago(): Prisma.comprobantes_de_pagoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -276,14 +290,6 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics
-   */
-  export type Metrics = runtime.Metrics
-  export type Metric<T> = runtime.Metric<T>
-  export type MetricHistogram = runtime.MetricHistogram
-  export type MetricHistogramBucket = runtime.MetricHistogramBucket
-
-  /**
   * Extensions
   */
   export import Extension = $Extensions.UserArgs
@@ -294,11 +300,12 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.17.0
-   * Query Engine version: c0aafc03b8ef6cdced8654b9a817999e02457d6a
+   * Prisma Client JS version: 7.3.0
+   * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
    */
   export type PrismaVersion = {
     client: string
+    engine: string
   }
 
   export const prismaVersion: PrismaVersion
@@ -308,6 +315,7 @@ export namespace Prisma {
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -682,15 +690,13 @@ export namespace Prisma {
     payment: 'payment',
     interactions: 'interactions',
     mails: 'mails',
-    datos_actualizados: 'datos_actualizados'
+    datos_actualizados: 'datos_actualizados',
+    comprobantes_de_pago: 'comprobantes_de_pago'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 
-  export type Datasources = {
-    db?: Datasource
-  }
 
   interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
     returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
@@ -701,7 +707,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "users" | "first_contact_lote" | "interaction_Type" | "payment" | "interactions" | "mails" | "datos_actualizados"
+      modelProps: "users" | "first_contact_lote" | "interaction_Type" | "payment" | "interactions" | "mails" | "datos_actualizados" | "comprobantes_de_pago"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1223,6 +1229,80 @@ export namespace Prisma {
           }
         }
       }
+      comprobantes_de_pago: {
+        payload: Prisma.$comprobantes_de_pagoPayload<ExtArgs>
+        fields: Prisma.comprobantes_de_pagoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.comprobantes_de_pagoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.comprobantes_de_pagoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>
+          }
+          findFirst: {
+            args: Prisma.comprobantes_de_pagoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.comprobantes_de_pagoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>
+          }
+          findMany: {
+            args: Prisma.comprobantes_de_pagoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>[]
+          }
+          create: {
+            args: Prisma.comprobantes_de_pagoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>
+          }
+          createMany: {
+            args: Prisma.comprobantes_de_pagoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.comprobantes_de_pagoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>[]
+          }
+          delete: {
+            args: Prisma.comprobantes_de_pagoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>
+          }
+          update: {
+            args: Prisma.comprobantes_de_pagoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>
+          }
+          deleteMany: {
+            args: Prisma.comprobantes_de_pagoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.comprobantes_de_pagoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.comprobantes_de_pagoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>[]
+          }
+          upsert: {
+            args: Prisma.comprobantes_de_pagoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$comprobantes_de_pagoPayload>
+          }
+          aggregate: {
+            args: Prisma.Comprobantes_de_pagoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateComprobantes_de_pago>
+          }
+          groupBy: {
+            args: Prisma.comprobantes_de_pagoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Comprobantes_de_pagoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.comprobantes_de_pagoCountArgs<ExtArgs>
+            result: $Utils.Optional<Comprobantes_de_pagoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1252,14 +1332,6 @@ export namespace Prisma {
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
     /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasources?: Datasources
-    /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasourceUrl?: string
-    /**
      * @default "colorless"
      */
     errorFormat?: ErrorFormat
@@ -1285,7 +1357,7 @@ export namespace Prisma {
      *  { emit: 'stdout', level: 'error' }
      * 
      * ```
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     * Read more in our [docs](https://pris.ly/d/logging).
      */
     log?: (LogLevel | LogDefinition)[]
     /**
@@ -1301,7 +1373,11 @@ export namespace Prisma {
     /**
      * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
      */
-    adapter?: runtime.SqlDriverAdapterFactory | null
+    adapter?: runtime.SqlDriverAdapterFactory
+    /**
+     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     */
+    accelerateUrl?: string
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -1317,6 +1393,22 @@ export namespace Prisma {
      * ```
      */
     omit?: Prisma.GlobalOmitConfig
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   adapter,
+     *   comments: [
+     *     traceContext(),
+     *     queryInsights(),
+     *   ],
+     * })
+     * ```
+     */
+    comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
     users?: UsersOmit
@@ -1326,6 +1418,7 @@ export namespace Prisma {
     interactions?: interactionsOmit
     mails?: mailsOmit
     datos_actualizados?: datos_actualizadosOmit
+    comprobantes_de_pago?: comprobantes_de_pagoOmit
   }
 
   /* Types for Logging */
@@ -6233,8 +6326,8 @@ export namespace Prisma {
     paymentId?: boolean
     interaction_TypeId?: boolean
     createdAt?: boolean
+    interaction_Type?: boolean | interaction_TypeDefaultArgs<ExtArgs>
     payment?: boolean | interactions$paymentArgs<ExtArgs>
-    interaction_Type?: boolean | interactions$interaction_TypeArgs<ExtArgs>
   }, ExtArgs["result"]["interactions"]>
 
   export type interactionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6243,8 +6336,8 @@ export namespace Prisma {
     paymentId?: boolean
     interaction_TypeId?: boolean
     createdAt?: boolean
+    interaction_Type?: boolean | interaction_TypeDefaultArgs<ExtArgs>
     payment?: boolean | interactions$paymentArgs<ExtArgs>
-    interaction_Type?: boolean | interactions$interaction_TypeArgs<ExtArgs>
   }, ExtArgs["result"]["interactions"]>
 
   export type interactionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6253,8 +6346,8 @@ export namespace Prisma {
     paymentId?: boolean
     interaction_TypeId?: boolean
     createdAt?: boolean
+    interaction_Type?: boolean | interaction_TypeDefaultArgs<ExtArgs>
     payment?: boolean | interactions$paymentArgs<ExtArgs>
-    interaction_Type?: boolean | interactions$interaction_TypeArgs<ExtArgs>
   }, ExtArgs["result"]["interactions"]>
 
   export type interactionsSelectScalar = {
@@ -6267,23 +6360,23 @@ export namespace Prisma {
 
   export type interactionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accion" | "paymentId" | "interaction_TypeId" | "createdAt", ExtArgs["result"]["interactions"]>
   export type interactionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interaction_Type?: boolean | interaction_TypeDefaultArgs<ExtArgs>
     payment?: boolean | interactions$paymentArgs<ExtArgs>
-    interaction_Type?: boolean | interactions$interaction_TypeArgs<ExtArgs>
   }
   export type interactionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interaction_Type?: boolean | interaction_TypeDefaultArgs<ExtArgs>
     payment?: boolean | interactions$paymentArgs<ExtArgs>
-    interaction_Type?: boolean | interactions$interaction_TypeArgs<ExtArgs>
   }
   export type interactionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interaction_Type?: boolean | interaction_TypeDefaultArgs<ExtArgs>
     payment?: boolean | interactions$paymentArgs<ExtArgs>
-    interaction_Type?: boolean | interactions$interaction_TypeArgs<ExtArgs>
   }
 
   export type $interactionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "interactions"
     objects: {
+      interaction_Type: Prisma.$interaction_TypePayload<ExtArgs>
       payment: Prisma.$paymentPayload<ExtArgs> | null
-      interaction_Type: Prisma.$interaction_TypePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6685,8 +6778,8 @@ export namespace Prisma {
    */
   export interface Prisma__interactionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    interaction_Type<T extends interaction_TypeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, interaction_TypeDefaultArgs<ExtArgs>>): Prisma__interaction_TypeClient<$Result.GetResult<Prisma.$interaction_TypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     payment<T extends interactions$paymentArgs<ExtArgs> = {}>(args?: Subset<T, interactions$paymentArgs<ExtArgs>>): Prisma__paymentClient<$Result.GetResult<Prisma.$paymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    interaction_Type<T extends interactions$interaction_TypeArgs<ExtArgs> = {}>(args?: Subset<T, interactions$interaction_TypeArgs<ExtArgs>>): Prisma__interaction_TypeClient<$Result.GetResult<Prisma.$interaction_TypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7131,25 +7224,6 @@ export namespace Prisma {
      */
     include?: paymentInclude<ExtArgs> | null
     where?: paymentWhereInput
-  }
-
-  /**
-   * interactions.interaction_Type
-   */
-  export type interactions$interaction_TypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the interaction_Type
-     */
-    select?: interaction_TypeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the interaction_Type
-     */
-    omit?: interaction_TypeOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: interaction_TypeInclude<ExtArgs> | null
-    where?: interaction_TypeWhereInput
   }
 
   /**
@@ -9424,6 +9498,1141 @@ export namespace Prisma {
 
 
   /**
+   * Model comprobantes_de_pago
+   */
+
+  export type AggregateComprobantes_de_pago = {
+    _count: Comprobantes_de_pagoCountAggregateOutputType | null
+    _avg: Comprobantes_de_pagoAvgAggregateOutputType | null
+    _sum: Comprobantes_de_pagoSumAggregateOutputType | null
+    _min: Comprobantes_de_pagoMinAggregateOutputType | null
+    _max: Comprobantes_de_pagoMaxAggregateOutputType | null
+  }
+
+  export type Comprobantes_de_pagoAvgAggregateOutputType = {
+    id: number | null
+    monto: number | null
+  }
+
+  export type Comprobantes_de_pagoSumAggregateOutputType = {
+    id: number | null
+    monto: number | null
+  }
+
+  export type Comprobantes_de_pagoMinAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    pay_date: string | null
+    destiny_banck: string | null
+    origin_banck: string | null
+    accion: string | null
+    tipo_pago: string | null
+    referencia: string | null
+    monto: number | null
+    verificacion: boolean | null
+    status: string | null
+    msj: string | null
+    image: string | null
+  }
+
+  export type Comprobantes_de_pagoMaxAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    pay_date: string | null
+    destiny_banck: string | null
+    origin_banck: string | null
+    accion: string | null
+    tipo_pago: string | null
+    referencia: string | null
+    monto: number | null
+    verificacion: boolean | null
+    status: string | null
+    msj: string | null
+    image: string | null
+  }
+
+  export type Comprobantes_de_pagoCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    pay_date: number
+    destiny_banck: number
+    origin_banck: number
+    accion: number
+    tipo_pago: number
+    referencia: number
+    monto: number
+    verificacion: number
+    status: number
+    msj: number
+    image: number
+    _all: number
+  }
+
+
+  export type Comprobantes_de_pagoAvgAggregateInputType = {
+    id?: true
+    monto?: true
+  }
+
+  export type Comprobantes_de_pagoSumAggregateInputType = {
+    id?: true
+    monto?: true
+  }
+
+  export type Comprobantes_de_pagoMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    pay_date?: true
+    destiny_banck?: true
+    origin_banck?: true
+    accion?: true
+    tipo_pago?: true
+    referencia?: true
+    monto?: true
+    verificacion?: true
+    status?: true
+    msj?: true
+    image?: true
+  }
+
+  export type Comprobantes_de_pagoMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    pay_date?: true
+    destiny_banck?: true
+    origin_banck?: true
+    accion?: true
+    tipo_pago?: true
+    referencia?: true
+    monto?: true
+    verificacion?: true
+    status?: true
+    msj?: true
+    image?: true
+  }
+
+  export type Comprobantes_de_pagoCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    pay_date?: true
+    destiny_banck?: true
+    origin_banck?: true
+    accion?: true
+    tipo_pago?: true
+    referencia?: true
+    monto?: true
+    verificacion?: true
+    status?: true
+    msj?: true
+    image?: true
+    _all?: true
+  }
+
+  export type Comprobantes_de_pagoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which comprobantes_de_pago to aggregate.
+     */
+    where?: comprobantes_de_pagoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of comprobantes_de_pagos to fetch.
+     */
+    orderBy?: comprobantes_de_pagoOrderByWithRelationInput | comprobantes_de_pagoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: comprobantes_de_pagoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` comprobantes_de_pagos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` comprobantes_de_pagos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned comprobantes_de_pagos
+    **/
+    _count?: true | Comprobantes_de_pagoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Comprobantes_de_pagoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Comprobantes_de_pagoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Comprobantes_de_pagoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Comprobantes_de_pagoMaxAggregateInputType
+  }
+
+  export type GetComprobantes_de_pagoAggregateType<T extends Comprobantes_de_pagoAggregateArgs> = {
+        [P in keyof T & keyof AggregateComprobantes_de_pago]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateComprobantes_de_pago[P]>
+      : GetScalarType<T[P], AggregateComprobantes_de_pago[P]>
+  }
+
+
+
+
+  export type comprobantes_de_pagoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: comprobantes_de_pagoWhereInput
+    orderBy?: comprobantes_de_pagoOrderByWithAggregationInput | comprobantes_de_pagoOrderByWithAggregationInput[]
+    by: Comprobantes_de_pagoScalarFieldEnum[] | Comprobantes_de_pagoScalarFieldEnum
+    having?: comprobantes_de_pagoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Comprobantes_de_pagoCountAggregateInputType | true
+    _avg?: Comprobantes_de_pagoAvgAggregateInputType
+    _sum?: Comprobantes_de_pagoSumAggregateInputType
+    _min?: Comprobantes_de_pagoMinAggregateInputType
+    _max?: Comprobantes_de_pagoMaxAggregateInputType
+  }
+
+  export type Comprobantes_de_pagoGroupByOutputType = {
+    id: number
+    createdAt: Date
+    pay_date: string
+    destiny_banck: string
+    origin_banck: string
+    accion: string
+    tipo_pago: string
+    referencia: string
+    monto: number
+    verificacion: boolean
+    status: string
+    msj: string
+    image: string
+    _count: Comprobantes_de_pagoCountAggregateOutputType | null
+    _avg: Comprobantes_de_pagoAvgAggregateOutputType | null
+    _sum: Comprobantes_de_pagoSumAggregateOutputType | null
+    _min: Comprobantes_de_pagoMinAggregateOutputType | null
+    _max: Comprobantes_de_pagoMaxAggregateOutputType | null
+  }
+
+  type GetComprobantes_de_pagoGroupByPayload<T extends comprobantes_de_pagoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Comprobantes_de_pagoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Comprobantes_de_pagoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Comprobantes_de_pagoGroupByOutputType[P]>
+            : GetScalarType<T[P], Comprobantes_de_pagoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type comprobantes_de_pagoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    pay_date?: boolean
+    destiny_banck?: boolean
+    origin_banck?: boolean
+    accion?: boolean
+    tipo_pago?: boolean
+    referencia?: boolean
+    monto?: boolean
+    verificacion?: boolean
+    status?: boolean
+    msj?: boolean
+    image?: boolean
+  }, ExtArgs["result"]["comprobantes_de_pago"]>
+
+  export type comprobantes_de_pagoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    pay_date?: boolean
+    destiny_banck?: boolean
+    origin_banck?: boolean
+    accion?: boolean
+    tipo_pago?: boolean
+    referencia?: boolean
+    monto?: boolean
+    verificacion?: boolean
+    status?: boolean
+    msj?: boolean
+    image?: boolean
+  }, ExtArgs["result"]["comprobantes_de_pago"]>
+
+  export type comprobantes_de_pagoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    pay_date?: boolean
+    destiny_banck?: boolean
+    origin_banck?: boolean
+    accion?: boolean
+    tipo_pago?: boolean
+    referencia?: boolean
+    monto?: boolean
+    verificacion?: boolean
+    status?: boolean
+    msj?: boolean
+    image?: boolean
+  }, ExtArgs["result"]["comprobantes_de_pago"]>
+
+  export type comprobantes_de_pagoSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    pay_date?: boolean
+    destiny_banck?: boolean
+    origin_banck?: boolean
+    accion?: boolean
+    tipo_pago?: boolean
+    referencia?: boolean
+    monto?: boolean
+    verificacion?: boolean
+    status?: boolean
+    msj?: boolean
+    image?: boolean
+  }
+
+  export type comprobantes_de_pagoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "pay_date" | "destiny_banck" | "origin_banck" | "accion" | "tipo_pago" | "referencia" | "monto" | "verificacion" | "status" | "msj" | "image", ExtArgs["result"]["comprobantes_de_pago"]>
+
+  export type $comprobantes_de_pagoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "comprobantes_de_pago"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      createdAt: Date
+      pay_date: string
+      destiny_banck: string
+      origin_banck: string
+      accion: string
+      tipo_pago: string
+      referencia: string
+      monto: number
+      verificacion: boolean
+      status: string
+      msj: string
+      image: string
+    }, ExtArgs["result"]["comprobantes_de_pago"]>
+    composites: {}
+  }
+
+  type comprobantes_de_pagoGetPayload<S extends boolean | null | undefined | comprobantes_de_pagoDefaultArgs> = $Result.GetResult<Prisma.$comprobantes_de_pagoPayload, S>
+
+  type comprobantes_de_pagoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<comprobantes_de_pagoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Comprobantes_de_pagoCountAggregateInputType | true
+    }
+
+  export interface comprobantes_de_pagoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['comprobantes_de_pago'], meta: { name: 'comprobantes_de_pago' } }
+    /**
+     * Find zero or one Comprobantes_de_pago that matches the filter.
+     * @param {comprobantes_de_pagoFindUniqueArgs} args - Arguments to find a Comprobantes_de_pago
+     * @example
+     * // Get one Comprobantes_de_pago
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends comprobantes_de_pagoFindUniqueArgs>(args: SelectSubset<T, comprobantes_de_pagoFindUniqueArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Comprobantes_de_pago that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {comprobantes_de_pagoFindUniqueOrThrowArgs} args - Arguments to find a Comprobantes_de_pago
+     * @example
+     * // Get one Comprobantes_de_pago
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends comprobantes_de_pagoFindUniqueOrThrowArgs>(args: SelectSubset<T, comprobantes_de_pagoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comprobantes_de_pago that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {comprobantes_de_pagoFindFirstArgs} args - Arguments to find a Comprobantes_de_pago
+     * @example
+     * // Get one Comprobantes_de_pago
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends comprobantes_de_pagoFindFirstArgs>(args?: SelectSubset<T, comprobantes_de_pagoFindFirstArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comprobantes_de_pago that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {comprobantes_de_pagoFindFirstOrThrowArgs} args - Arguments to find a Comprobantes_de_pago
+     * @example
+     * // Get one Comprobantes_de_pago
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends comprobantes_de_pagoFindFirstOrThrowArgs>(args?: SelectSubset<T, comprobantes_de_pagoFindFirstOrThrowArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Comprobantes_de_pagos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {comprobantes_de_pagoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Comprobantes_de_pagos
+     * const comprobantes_de_pagos = await prisma.comprobantes_de_pago.findMany()
+     * 
+     * // Get first 10 Comprobantes_de_pagos
+     * const comprobantes_de_pagos = await prisma.comprobantes_de_pago.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const comprobantes_de_pagoWithIdOnly = await prisma.comprobantes_de_pago.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends comprobantes_de_pagoFindManyArgs>(args?: SelectSubset<T, comprobantes_de_pagoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Comprobantes_de_pago.
+     * @param {comprobantes_de_pagoCreateArgs} args - Arguments to create a Comprobantes_de_pago.
+     * @example
+     * // Create one Comprobantes_de_pago
+     * const Comprobantes_de_pago = await prisma.comprobantes_de_pago.create({
+     *   data: {
+     *     // ... data to create a Comprobantes_de_pago
+     *   }
+     * })
+     * 
+     */
+    create<T extends comprobantes_de_pagoCreateArgs>(args: SelectSubset<T, comprobantes_de_pagoCreateArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Comprobantes_de_pagos.
+     * @param {comprobantes_de_pagoCreateManyArgs} args - Arguments to create many Comprobantes_de_pagos.
+     * @example
+     * // Create many Comprobantes_de_pagos
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends comprobantes_de_pagoCreateManyArgs>(args?: SelectSubset<T, comprobantes_de_pagoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Comprobantes_de_pagos and returns the data saved in the database.
+     * @param {comprobantes_de_pagoCreateManyAndReturnArgs} args - Arguments to create many Comprobantes_de_pagos.
+     * @example
+     * // Create many Comprobantes_de_pagos
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Comprobantes_de_pagos and only return the `id`
+     * const comprobantes_de_pagoWithIdOnly = await prisma.comprobantes_de_pago.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends comprobantes_de_pagoCreateManyAndReturnArgs>(args?: SelectSubset<T, comprobantes_de_pagoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Comprobantes_de_pago.
+     * @param {comprobantes_de_pagoDeleteArgs} args - Arguments to delete one Comprobantes_de_pago.
+     * @example
+     * // Delete one Comprobantes_de_pago
+     * const Comprobantes_de_pago = await prisma.comprobantes_de_pago.delete({
+     *   where: {
+     *     // ... filter to delete one Comprobantes_de_pago
+     *   }
+     * })
+     * 
+     */
+    delete<T extends comprobantes_de_pagoDeleteArgs>(args: SelectSubset<T, comprobantes_de_pagoDeleteArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Comprobantes_de_pago.
+     * @param {comprobantes_de_pagoUpdateArgs} args - Arguments to update one Comprobantes_de_pago.
+     * @example
+     * // Update one Comprobantes_de_pago
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends comprobantes_de_pagoUpdateArgs>(args: SelectSubset<T, comprobantes_de_pagoUpdateArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Comprobantes_de_pagos.
+     * @param {comprobantes_de_pagoDeleteManyArgs} args - Arguments to filter Comprobantes_de_pagos to delete.
+     * @example
+     * // Delete a few Comprobantes_de_pagos
+     * const { count } = await prisma.comprobantes_de_pago.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends comprobantes_de_pagoDeleteManyArgs>(args?: SelectSubset<T, comprobantes_de_pagoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comprobantes_de_pagos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {comprobantes_de_pagoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Comprobantes_de_pagos
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends comprobantes_de_pagoUpdateManyArgs>(args: SelectSubset<T, comprobantes_de_pagoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comprobantes_de_pagos and returns the data updated in the database.
+     * @param {comprobantes_de_pagoUpdateManyAndReturnArgs} args - Arguments to update many Comprobantes_de_pagos.
+     * @example
+     * // Update many Comprobantes_de_pagos
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Comprobantes_de_pagos and only return the `id`
+     * const comprobantes_de_pagoWithIdOnly = await prisma.comprobantes_de_pago.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends comprobantes_de_pagoUpdateManyAndReturnArgs>(args: SelectSubset<T, comprobantes_de_pagoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Comprobantes_de_pago.
+     * @param {comprobantes_de_pagoUpsertArgs} args - Arguments to update or create a Comprobantes_de_pago.
+     * @example
+     * // Update or create a Comprobantes_de_pago
+     * const comprobantes_de_pago = await prisma.comprobantes_de_pago.upsert({
+     *   create: {
+     *     // ... data to create a Comprobantes_de_pago
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Comprobantes_de_pago we want to update
+     *   }
+     * })
+     */
+    upsert<T extends comprobantes_de_pagoUpsertArgs>(args: SelectSubset<T, comprobantes_de_pagoUpsertArgs<ExtArgs>>): Prisma__comprobantes_de_pagoClient<$Result.GetResult<Prisma.$comprobantes_de_pagoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Comprobantes_de_pagos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {comprobantes_de_pagoCountArgs} args - Arguments to filter Comprobantes_de_pagos to count.
+     * @example
+     * // Count the number of Comprobantes_de_pagos
+     * const count = await prisma.comprobantes_de_pago.count({
+     *   where: {
+     *     // ... the filter for the Comprobantes_de_pagos we want to count
+     *   }
+     * })
+    **/
+    count<T extends comprobantes_de_pagoCountArgs>(
+      args?: Subset<T, comprobantes_de_pagoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Comprobantes_de_pagoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Comprobantes_de_pago.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Comprobantes_de_pagoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Comprobantes_de_pagoAggregateArgs>(args: Subset<T, Comprobantes_de_pagoAggregateArgs>): Prisma.PrismaPromise<GetComprobantes_de_pagoAggregateType<T>>
+
+    /**
+     * Group by Comprobantes_de_pago.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {comprobantes_de_pagoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends comprobantes_de_pagoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: comprobantes_de_pagoGroupByArgs['orderBy'] }
+        : { orderBy?: comprobantes_de_pagoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, comprobantes_de_pagoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetComprobantes_de_pagoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the comprobantes_de_pago model
+   */
+  readonly fields: comprobantes_de_pagoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for comprobantes_de_pago.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__comprobantes_de_pagoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the comprobantes_de_pago model
+   */
+  interface comprobantes_de_pagoFieldRefs {
+    readonly id: FieldRef<"comprobantes_de_pago", 'Int'>
+    readonly createdAt: FieldRef<"comprobantes_de_pago", 'DateTime'>
+    readonly pay_date: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly destiny_banck: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly origin_banck: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly accion: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly tipo_pago: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly referencia: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly monto: FieldRef<"comprobantes_de_pago", 'Float'>
+    readonly verificacion: FieldRef<"comprobantes_de_pago", 'Boolean'>
+    readonly status: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly msj: FieldRef<"comprobantes_de_pago", 'String'>
+    readonly image: FieldRef<"comprobantes_de_pago", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * comprobantes_de_pago findUnique
+   */
+  export type comprobantes_de_pagoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * Filter, which comprobantes_de_pago to fetch.
+     */
+    where: comprobantes_de_pagoWhereUniqueInput
+  }
+
+  /**
+   * comprobantes_de_pago findUniqueOrThrow
+   */
+  export type comprobantes_de_pagoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * Filter, which comprobantes_de_pago to fetch.
+     */
+    where: comprobantes_de_pagoWhereUniqueInput
+  }
+
+  /**
+   * comprobantes_de_pago findFirst
+   */
+  export type comprobantes_de_pagoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * Filter, which comprobantes_de_pago to fetch.
+     */
+    where?: comprobantes_de_pagoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of comprobantes_de_pagos to fetch.
+     */
+    orderBy?: comprobantes_de_pagoOrderByWithRelationInput | comprobantes_de_pagoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for comprobantes_de_pagos.
+     */
+    cursor?: comprobantes_de_pagoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` comprobantes_de_pagos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` comprobantes_de_pagos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of comprobantes_de_pagos.
+     */
+    distinct?: Comprobantes_de_pagoScalarFieldEnum | Comprobantes_de_pagoScalarFieldEnum[]
+  }
+
+  /**
+   * comprobantes_de_pago findFirstOrThrow
+   */
+  export type comprobantes_de_pagoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * Filter, which comprobantes_de_pago to fetch.
+     */
+    where?: comprobantes_de_pagoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of comprobantes_de_pagos to fetch.
+     */
+    orderBy?: comprobantes_de_pagoOrderByWithRelationInput | comprobantes_de_pagoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for comprobantes_de_pagos.
+     */
+    cursor?: comprobantes_de_pagoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` comprobantes_de_pagos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` comprobantes_de_pagos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of comprobantes_de_pagos.
+     */
+    distinct?: Comprobantes_de_pagoScalarFieldEnum | Comprobantes_de_pagoScalarFieldEnum[]
+  }
+
+  /**
+   * comprobantes_de_pago findMany
+   */
+  export type comprobantes_de_pagoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * Filter, which comprobantes_de_pagos to fetch.
+     */
+    where?: comprobantes_de_pagoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of comprobantes_de_pagos to fetch.
+     */
+    orderBy?: comprobantes_de_pagoOrderByWithRelationInput | comprobantes_de_pagoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing comprobantes_de_pagos.
+     */
+    cursor?: comprobantes_de_pagoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` comprobantes_de_pagos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` comprobantes_de_pagos.
+     */
+    skip?: number
+    distinct?: Comprobantes_de_pagoScalarFieldEnum | Comprobantes_de_pagoScalarFieldEnum[]
+  }
+
+  /**
+   * comprobantes_de_pago create
+   */
+  export type comprobantes_de_pagoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * The data needed to create a comprobantes_de_pago.
+     */
+    data: XOR<comprobantes_de_pagoCreateInput, comprobantes_de_pagoUncheckedCreateInput>
+  }
+
+  /**
+   * comprobantes_de_pago createMany
+   */
+  export type comprobantes_de_pagoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many comprobantes_de_pagos.
+     */
+    data: comprobantes_de_pagoCreateManyInput | comprobantes_de_pagoCreateManyInput[]
+  }
+
+  /**
+   * comprobantes_de_pago createManyAndReturn
+   */
+  export type comprobantes_de_pagoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * The data used to create many comprobantes_de_pagos.
+     */
+    data: comprobantes_de_pagoCreateManyInput | comprobantes_de_pagoCreateManyInput[]
+  }
+
+  /**
+   * comprobantes_de_pago update
+   */
+  export type comprobantes_de_pagoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * The data needed to update a comprobantes_de_pago.
+     */
+    data: XOR<comprobantes_de_pagoUpdateInput, comprobantes_de_pagoUncheckedUpdateInput>
+    /**
+     * Choose, which comprobantes_de_pago to update.
+     */
+    where: comprobantes_de_pagoWhereUniqueInput
+  }
+
+  /**
+   * comprobantes_de_pago updateMany
+   */
+  export type comprobantes_de_pagoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update comprobantes_de_pagos.
+     */
+    data: XOR<comprobantes_de_pagoUpdateManyMutationInput, comprobantes_de_pagoUncheckedUpdateManyInput>
+    /**
+     * Filter which comprobantes_de_pagos to update
+     */
+    where?: comprobantes_de_pagoWhereInput
+    /**
+     * Limit how many comprobantes_de_pagos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * comprobantes_de_pago updateManyAndReturn
+   */
+  export type comprobantes_de_pagoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * The data used to update comprobantes_de_pagos.
+     */
+    data: XOR<comprobantes_de_pagoUpdateManyMutationInput, comprobantes_de_pagoUncheckedUpdateManyInput>
+    /**
+     * Filter which comprobantes_de_pagos to update
+     */
+    where?: comprobantes_de_pagoWhereInput
+    /**
+     * Limit how many comprobantes_de_pagos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * comprobantes_de_pago upsert
+   */
+  export type comprobantes_de_pagoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * The filter to search for the comprobantes_de_pago to update in case it exists.
+     */
+    where: comprobantes_de_pagoWhereUniqueInput
+    /**
+     * In case the comprobantes_de_pago found by the `where` argument doesn't exist, create a new comprobantes_de_pago with this data.
+     */
+    create: XOR<comprobantes_de_pagoCreateInput, comprobantes_de_pagoUncheckedCreateInput>
+    /**
+     * In case the comprobantes_de_pago was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<comprobantes_de_pagoUpdateInput, comprobantes_de_pagoUncheckedUpdateInput>
+  }
+
+  /**
+   * comprobantes_de_pago delete
+   */
+  export type comprobantes_de_pagoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+    /**
+     * Filter which comprobantes_de_pago to delete.
+     */
+    where: comprobantes_de_pagoWhereUniqueInput
+  }
+
+  /**
+   * comprobantes_de_pago deleteMany
+   */
+  export type comprobantes_de_pagoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which comprobantes_de_pagos to delete
+     */
+    where?: comprobantes_de_pagoWhereInput
+    /**
+     * Limit how many comprobantes_de_pagos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * comprobantes_de_pago without action
+   */
+  export type comprobantes_de_pagoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the comprobantes_de_pago
+     */
+    select?: comprobantes_de_pagoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the comprobantes_de_pago
+     */
+    omit?: comprobantes_de_pagoOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9532,6 +10741,25 @@ export namespace Prisma {
   };
 
   export type Datos_actualizadosScalarFieldEnum = (typeof Datos_actualizadosScalarFieldEnum)[keyof typeof Datos_actualizadosScalarFieldEnum]
+
+
+  export const Comprobantes_de_pagoScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    pay_date: 'pay_date',
+    destiny_banck: 'destiny_banck',
+    origin_banck: 'origin_banck',
+    accion: 'accion',
+    tipo_pago: 'tipo_pago',
+    referencia: 'referencia',
+    monto: 'monto',
+    verificacion: 'verificacion',
+    status: 'status',
+    msj: 'msj',
+    image: 'image'
+  };
+
+  export type Comprobantes_de_pagoScalarFieldEnum = (typeof Comprobantes_de_pagoScalarFieldEnum)[keyof typeof Comprobantes_de_pagoScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -9875,8 +11103,8 @@ export namespace Prisma {
     paymentId?: IntNullableFilter<"interactions"> | number | null
     interaction_TypeId?: IntFilter<"interactions"> | number
     createdAt?: DateTimeFilter<"interactions"> | Date | string
+    interaction_Type?: XOR<Interaction_TypeScalarRelationFilter, interaction_TypeWhereInput>
     payment?: XOR<PaymentNullableScalarRelationFilter, paymentWhereInput> | null
-    interaction_Type?: XOR<Interaction_TypeNullableScalarRelationFilter, interaction_TypeWhereInput> | null
   }
 
   export type interactionsOrderByWithRelationInput = {
@@ -9885,8 +11113,8 @@ export namespace Prisma {
     paymentId?: SortOrderInput | SortOrder
     interaction_TypeId?: SortOrder
     createdAt?: SortOrder
-    payment?: paymentOrderByWithRelationInput
     interaction_Type?: interaction_TypeOrderByWithRelationInput
+    payment?: paymentOrderByWithRelationInput
   }
 
   export type interactionsWhereUniqueInput = Prisma.AtLeast<{
@@ -9898,8 +11126,8 @@ export namespace Prisma {
     paymentId?: IntNullableFilter<"interactions"> | number | null
     interaction_TypeId?: IntFilter<"interactions"> | number
     createdAt?: DateTimeFilter<"interactions"> | Date | string
+    interaction_Type?: XOR<Interaction_TypeScalarRelationFilter, interaction_TypeWhereInput>
     payment?: XOR<PaymentNullableScalarRelationFilter, paymentWhereInput> | null
-    interaction_Type?: XOR<Interaction_TypeNullableScalarRelationFilter, interaction_TypeWhereInput> | null
   }, "id">
 
   export type interactionsOrderByWithAggregationInput = {
@@ -10102,6 +11330,100 @@ export namespace Prisma {
     telefono_celular?: StringWithAggregatesFilter<"datos_actualizados"> | string
     telofono_hogar?: StringWithAggregatesFilter<"datos_actualizados"> | string
     telefono_trabajo?: StringWithAggregatesFilter<"datos_actualizados"> | string
+  }
+
+  export type comprobantes_de_pagoWhereInput = {
+    AND?: comprobantes_de_pagoWhereInput | comprobantes_de_pagoWhereInput[]
+    OR?: comprobantes_de_pagoWhereInput[]
+    NOT?: comprobantes_de_pagoWhereInput | comprobantes_de_pagoWhereInput[]
+    id?: IntFilter<"comprobantes_de_pago"> | number
+    createdAt?: DateTimeFilter<"comprobantes_de_pago"> | Date | string
+    pay_date?: StringFilter<"comprobantes_de_pago"> | string
+    destiny_banck?: StringFilter<"comprobantes_de_pago"> | string
+    origin_banck?: StringFilter<"comprobantes_de_pago"> | string
+    accion?: StringFilter<"comprobantes_de_pago"> | string
+    tipo_pago?: StringFilter<"comprobantes_de_pago"> | string
+    referencia?: StringFilter<"comprobantes_de_pago"> | string
+    monto?: FloatFilter<"comprobantes_de_pago"> | number
+    verificacion?: BoolFilter<"comprobantes_de_pago"> | boolean
+    status?: StringFilter<"comprobantes_de_pago"> | string
+    msj?: StringFilter<"comprobantes_de_pago"> | string
+    image?: StringFilter<"comprobantes_de_pago"> | string
+  }
+
+  export type comprobantes_de_pagoOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    pay_date?: SortOrder
+    destiny_banck?: SortOrder
+    origin_banck?: SortOrder
+    accion?: SortOrder
+    tipo_pago?: SortOrder
+    referencia?: SortOrder
+    monto?: SortOrder
+    verificacion?: SortOrder
+    status?: SortOrder
+    msj?: SortOrder
+    image?: SortOrder
+  }
+
+  export type comprobantes_de_pagoWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: comprobantes_de_pagoWhereInput | comprobantes_de_pagoWhereInput[]
+    OR?: comprobantes_de_pagoWhereInput[]
+    NOT?: comprobantes_de_pagoWhereInput | comprobantes_de_pagoWhereInput[]
+    createdAt?: DateTimeFilter<"comprobantes_de_pago"> | Date | string
+    pay_date?: StringFilter<"comprobantes_de_pago"> | string
+    destiny_banck?: StringFilter<"comprobantes_de_pago"> | string
+    origin_banck?: StringFilter<"comprobantes_de_pago"> | string
+    accion?: StringFilter<"comprobantes_de_pago"> | string
+    tipo_pago?: StringFilter<"comprobantes_de_pago"> | string
+    referencia?: StringFilter<"comprobantes_de_pago"> | string
+    monto?: FloatFilter<"comprobantes_de_pago"> | number
+    verificacion?: BoolFilter<"comprobantes_de_pago"> | boolean
+    status?: StringFilter<"comprobantes_de_pago"> | string
+    msj?: StringFilter<"comprobantes_de_pago"> | string
+    image?: StringFilter<"comprobantes_de_pago"> | string
+  }, "id">
+
+  export type comprobantes_de_pagoOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    pay_date?: SortOrder
+    destiny_banck?: SortOrder
+    origin_banck?: SortOrder
+    accion?: SortOrder
+    tipo_pago?: SortOrder
+    referencia?: SortOrder
+    monto?: SortOrder
+    verificacion?: SortOrder
+    status?: SortOrder
+    msj?: SortOrder
+    image?: SortOrder
+    _count?: comprobantes_de_pagoCountOrderByAggregateInput
+    _avg?: comprobantes_de_pagoAvgOrderByAggregateInput
+    _max?: comprobantes_de_pagoMaxOrderByAggregateInput
+    _min?: comprobantes_de_pagoMinOrderByAggregateInput
+    _sum?: comprobantes_de_pagoSumOrderByAggregateInput
+  }
+
+  export type comprobantes_de_pagoScalarWhereWithAggregatesInput = {
+    AND?: comprobantes_de_pagoScalarWhereWithAggregatesInput | comprobantes_de_pagoScalarWhereWithAggregatesInput[]
+    OR?: comprobantes_de_pagoScalarWhereWithAggregatesInput[]
+    NOT?: comprobantes_de_pagoScalarWhereWithAggregatesInput | comprobantes_de_pagoScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"comprobantes_de_pago"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"comprobantes_de_pago"> | Date | string
+    pay_date?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    destiny_banck?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    origin_banck?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    accion?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    tipo_pago?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    referencia?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    monto?: FloatWithAggregatesFilter<"comprobantes_de_pago"> | number
+    verificacion?: BoolWithAggregatesFilter<"comprobantes_de_pago"> | boolean
+    status?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    msj?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
+    image?: StringWithAggregatesFilter<"comprobantes_de_pago"> | string
   }
 
   export type UsersCreateInput = {
@@ -10393,8 +11715,8 @@ export namespace Prisma {
   export type interactionsCreateInput = {
     accion: string
     createdAt?: Date | string
+    interaction_Type: interaction_TypeCreateNestedOneWithoutInteractionsInput
     payment?: paymentCreateNestedOneWithoutInteractionInput
-    interaction_Type?: interaction_TypeCreateNestedOneWithoutInteractionsInput
   }
 
   export type interactionsUncheckedCreateInput = {
@@ -10408,8 +11730,8 @@ export namespace Prisma {
   export type interactionsUpdateInput = {
     accion?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    interaction_Type?: interaction_TypeUpdateOneRequiredWithoutInteractionsNestedInput
     payment?: paymentUpdateOneWithoutInteractionNestedInput
-    interaction_Type?: interaction_TypeUpdateOneWithoutInteractionsNestedInput
   }
 
   export type interactionsUncheckedUpdateInput = {
@@ -10643,6 +11965,115 @@ export namespace Prisma {
     telefono_celular?: StringFieldUpdateOperationsInput | string
     telofono_hogar?: StringFieldUpdateOperationsInput | string
     telefono_trabajo?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type comprobantes_de_pagoCreateInput = {
+    createdAt?: Date | string
+    pay_date: string
+    destiny_banck: string
+    origin_banck: string
+    accion: string
+    tipo_pago: string
+    referencia: string
+    monto: number
+    verificacion?: boolean
+    status?: string
+    msj?: string
+    image: string
+  }
+
+  export type comprobantes_de_pagoUncheckedCreateInput = {
+    id?: number
+    createdAt?: Date | string
+    pay_date: string
+    destiny_banck: string
+    origin_banck: string
+    accion: string
+    tipo_pago: string
+    referencia: string
+    monto: number
+    verificacion?: boolean
+    status?: string
+    msj?: string
+    image: string
+  }
+
+  export type comprobantes_de_pagoUpdateInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pay_date?: StringFieldUpdateOperationsInput | string
+    destiny_banck?: StringFieldUpdateOperationsInput | string
+    origin_banck?: StringFieldUpdateOperationsInput | string
+    accion?: StringFieldUpdateOperationsInput | string
+    tipo_pago?: StringFieldUpdateOperationsInput | string
+    referencia?: StringFieldUpdateOperationsInput | string
+    monto?: FloatFieldUpdateOperationsInput | number
+    verificacion?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    msj?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type comprobantes_de_pagoUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pay_date?: StringFieldUpdateOperationsInput | string
+    destiny_banck?: StringFieldUpdateOperationsInput | string
+    origin_banck?: StringFieldUpdateOperationsInput | string
+    accion?: StringFieldUpdateOperationsInput | string
+    tipo_pago?: StringFieldUpdateOperationsInput | string
+    referencia?: StringFieldUpdateOperationsInput | string
+    monto?: FloatFieldUpdateOperationsInput | number
+    verificacion?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    msj?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type comprobantes_de_pagoCreateManyInput = {
+    id?: number
+    createdAt?: Date | string
+    pay_date: string
+    destiny_banck: string
+    origin_banck: string
+    accion: string
+    tipo_pago: string
+    referencia: string
+    monto: number
+    verificacion?: boolean
+    status?: string
+    msj?: string
+    image: string
+  }
+
+  export type comprobantes_de_pagoUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pay_date?: StringFieldUpdateOperationsInput | string
+    destiny_banck?: StringFieldUpdateOperationsInput | string
+    origin_banck?: StringFieldUpdateOperationsInput | string
+    accion?: StringFieldUpdateOperationsInput | string
+    tipo_pago?: StringFieldUpdateOperationsInput | string
+    referencia?: StringFieldUpdateOperationsInput | string
+    monto?: FloatFieldUpdateOperationsInput | number
+    verificacion?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    msj?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type comprobantes_de_pagoUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pay_date?: StringFieldUpdateOperationsInput | string
+    destiny_banck?: StringFieldUpdateOperationsInput | string
+    origin_banck?: StringFieldUpdateOperationsInput | string
+    accion?: StringFieldUpdateOperationsInput | string
+    tipo_pago?: StringFieldUpdateOperationsInput | string
+    referencia?: StringFieldUpdateOperationsInput | string
+    monto?: FloatFieldUpdateOperationsInput | number
+    verificacion?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    msj?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -11017,14 +12448,14 @@ export namespace Prisma {
     factura?: SortOrder
   }
 
+  export type Interaction_TypeScalarRelationFilter = {
+    is?: interaction_TypeWhereInput
+    isNot?: interaction_TypeWhereInput
+  }
+
   export type PaymentNullableScalarRelationFilter = {
     is?: paymentWhereInput | null
     isNot?: paymentWhereInput | null
-  }
-
-  export type Interaction_TypeNullableScalarRelationFilter = {
-    is?: interaction_TypeWhereInput | null
-    isNot?: interaction_TypeWhereInput | null
   }
 
   export type interactionsCountOrderByAggregateInput = {
@@ -11175,6 +12606,91 @@ export namespace Prisma {
     tipo_socio?: SortOrder
     cedula?: SortOrder
     rif?: SortOrder
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type comprobantes_de_pagoCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    pay_date?: SortOrder
+    destiny_banck?: SortOrder
+    origin_banck?: SortOrder
+    accion?: SortOrder
+    tipo_pago?: SortOrder
+    referencia?: SortOrder
+    monto?: SortOrder
+    verificacion?: SortOrder
+    status?: SortOrder
+    msj?: SortOrder
+    image?: SortOrder
+  }
+
+  export type comprobantes_de_pagoAvgOrderByAggregateInput = {
+    id?: SortOrder
+    monto?: SortOrder
+  }
+
+  export type comprobantes_de_pagoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    pay_date?: SortOrder
+    destiny_banck?: SortOrder
+    origin_banck?: SortOrder
+    accion?: SortOrder
+    tipo_pago?: SortOrder
+    referencia?: SortOrder
+    monto?: SortOrder
+    verificacion?: SortOrder
+    status?: SortOrder
+    msj?: SortOrder
+    image?: SortOrder
+  }
+
+  export type comprobantes_de_pagoMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    pay_date?: SortOrder
+    destiny_banck?: SortOrder
+    origin_banck?: SortOrder
+    accion?: SortOrder
+    tipo_pago?: SortOrder
+    referencia?: SortOrder
+    monto?: SortOrder
+    verificacion?: SortOrder
+    status?: SortOrder
+    msj?: SortOrder
+    image?: SortOrder
+  }
+
+  export type comprobantes_de_pagoSumOrderByAggregateInput = {
+    id?: SortOrder
+    monto?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type first_contact_loteCreateNestedManyWithoutUserInput = {
@@ -11353,16 +12869,24 @@ export namespace Prisma {
     deleteMany?: interactionsScalarWhereInput | interactionsScalarWhereInput[]
   }
 
+  export type interaction_TypeCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<interaction_TypeCreateWithoutInteractionsInput, interaction_TypeUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: interaction_TypeCreateOrConnectWithoutInteractionsInput
+    connect?: interaction_TypeWhereUniqueInput
+  }
+
   export type paymentCreateNestedOneWithoutInteractionInput = {
     create?: XOR<paymentCreateWithoutInteractionInput, paymentUncheckedCreateWithoutInteractionInput>
     connectOrCreate?: paymentCreateOrConnectWithoutInteractionInput
     connect?: paymentWhereUniqueInput
   }
 
-  export type interaction_TypeCreateNestedOneWithoutInteractionsInput = {
+  export type interaction_TypeUpdateOneRequiredWithoutInteractionsNestedInput = {
     create?: XOR<interaction_TypeCreateWithoutInteractionsInput, interaction_TypeUncheckedCreateWithoutInteractionsInput>
     connectOrCreate?: interaction_TypeCreateOrConnectWithoutInteractionsInput
+    upsert?: interaction_TypeUpsertWithoutInteractionsInput
     connect?: interaction_TypeWhereUniqueInput
+    update?: XOR<XOR<interaction_TypeUpdateToOneWithWhereWithoutInteractionsInput, interaction_TypeUpdateWithoutInteractionsInput>, interaction_TypeUncheckedUpdateWithoutInteractionsInput>
   }
 
   export type paymentUpdateOneWithoutInteractionNestedInput = {
@@ -11375,14 +12899,12 @@ export namespace Prisma {
     update?: XOR<XOR<paymentUpdateToOneWithWhereWithoutInteractionInput, paymentUpdateWithoutInteractionInput>, paymentUncheckedUpdateWithoutInteractionInput>
   }
 
-  export type interaction_TypeUpdateOneWithoutInteractionsNestedInput = {
-    create?: XOR<interaction_TypeCreateWithoutInteractionsInput, interaction_TypeUncheckedCreateWithoutInteractionsInput>
-    connectOrCreate?: interaction_TypeCreateOrConnectWithoutInteractionsInput
-    upsert?: interaction_TypeUpsertWithoutInteractionsInput
-    disconnect?: interaction_TypeWhereInput | boolean
-    delete?: interaction_TypeWhereInput | boolean
-    connect?: interaction_TypeWhereUniqueInput
-    update?: XOR<XOR<interaction_TypeUpdateToOneWithWhereWithoutInteractionsInput, interaction_TypeUpdateWithoutInteractionsInput>, interaction_TypeUncheckedUpdateWithoutInteractionsInput>
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -11586,6 +13108,22 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type first_contact_loteCreateWithoutUserInput = {
     createdAt?: Date | string
     accion: string
@@ -11774,7 +13312,7 @@ export namespace Prisma {
   export type interactionsCreateWithoutPaymentInput = {
     accion: string
     createdAt?: Date | string
-    interaction_Type?: interaction_TypeCreateNestedOneWithoutInteractionsInput
+    interaction_Type: interaction_TypeCreateNestedOneWithoutInteractionsInput
   }
 
   export type interactionsUncheckedCreateWithoutPaymentInput = {
@@ -11809,6 +13347,20 @@ export namespace Prisma {
     data: XOR<interactionsUpdateManyMutationInput, interactionsUncheckedUpdateManyWithoutPaymentInput>
   }
 
+  export type interaction_TypeCreateWithoutInteractionsInput = {
+    type: string
+  }
+
+  export type interaction_TypeUncheckedCreateWithoutInteractionsInput = {
+    id?: number
+    type: string
+  }
+
+  export type interaction_TypeCreateOrConnectWithoutInteractionsInput = {
+    where: interaction_TypeWhereUniqueInput
+    create: XOR<interaction_TypeCreateWithoutInteractionsInput, interaction_TypeUncheckedCreateWithoutInteractionsInput>
+  }
+
   export type paymentCreateWithoutInteractionInput = {
     factura: number
     createdAt?: Date | string
@@ -11825,18 +13377,24 @@ export namespace Prisma {
     create: XOR<paymentCreateWithoutInteractionInput, paymentUncheckedCreateWithoutInteractionInput>
   }
 
-  export type interaction_TypeCreateWithoutInteractionsInput = {
-    type: string
-  }
-
-  export type interaction_TypeUncheckedCreateWithoutInteractionsInput = {
-    id?: number
-    type: string
-  }
-
-  export type interaction_TypeCreateOrConnectWithoutInteractionsInput = {
-    where: interaction_TypeWhereUniqueInput
+  export type interaction_TypeUpsertWithoutInteractionsInput = {
+    update: XOR<interaction_TypeUpdateWithoutInteractionsInput, interaction_TypeUncheckedUpdateWithoutInteractionsInput>
     create: XOR<interaction_TypeCreateWithoutInteractionsInput, interaction_TypeUncheckedCreateWithoutInteractionsInput>
+    where?: interaction_TypeWhereInput
+  }
+
+  export type interaction_TypeUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: interaction_TypeWhereInput
+    data: XOR<interaction_TypeUpdateWithoutInteractionsInput, interaction_TypeUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type interaction_TypeUpdateWithoutInteractionsInput = {
+    type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type interaction_TypeUncheckedUpdateWithoutInteractionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
   }
 
   export type paymentUpsertWithoutInteractionInput = {
@@ -11859,26 +13417,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     factura?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type interaction_TypeUpsertWithoutInteractionsInput = {
-    update: XOR<interaction_TypeUpdateWithoutInteractionsInput, interaction_TypeUncheckedUpdateWithoutInteractionsInput>
-    create: XOR<interaction_TypeCreateWithoutInteractionsInput, interaction_TypeUncheckedCreateWithoutInteractionsInput>
-    where?: interaction_TypeWhereInput
-  }
-
-  export type interaction_TypeUpdateToOneWithWhereWithoutInteractionsInput = {
-    where?: interaction_TypeWhereInput
-    data: XOR<interaction_TypeUpdateWithoutInteractionsInput, interaction_TypeUncheckedUpdateWithoutInteractionsInput>
-  }
-
-  export type interaction_TypeUpdateWithoutInteractionsInput = {
-    type?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type interaction_TypeUncheckedUpdateWithoutInteractionsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
   }
 
   export type first_contact_loteCreateManyUserInput = {
@@ -12005,7 +13543,7 @@ export namespace Prisma {
   export type interactionsUpdateWithoutPaymentInput = {
     accion?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    interaction_Type?: interaction_TypeUpdateOneWithoutInteractionsNestedInput
+    interaction_Type?: interaction_TypeUpdateOneRequiredWithoutInteractionsNestedInput
   }
 
   export type interactionsUncheckedUpdateWithoutPaymentInput = {
